@@ -106,7 +106,7 @@ tkn pipeline start  gse-build-deploy-pvc-pipeline -n cos-liberty-tekton
   ![Pipeline1](images/tekton-only/start-2.jpg)
 
 ### 查看 pipeline logs
-- In the OpenShift Container Platform UI, change to the **Developer** view, select the `cos-liberty-tekton` project and then select **Pipelines**. Click on the **Last Run**
+- 在 OpenShift Container Platform UI 中，切换到Developer视图，选择cos-liberty-tekton项目，然后选择Pipelines。单击上次运行
 
   ![Pipeline](images/tekton-only/run-1.jpg)
 
@@ -114,17 +114,16 @@ tkn pipeline start  gse-build-deploy-pvc-pipeline -n cos-liberty-tekton
 
   ![Pipeline Logs](images/tekton-only/run-2.jpg)
 
-- The pipeline will execute and the logs will be displayed
+- 管道将执行并显示日志
 
   ![Pipeline Logs](images/tekton-only/run-3.jpg)
 
-- Once both the `gse-build` and `gse-apply-manifests` steps are complete, the pipeline is finished.
+- 一旦gse-build和gse-apply-manifests步骤都完成，管道就完成了。
 
 ### 验证应用
-Now that the pipeline is complete, validate the Customer Order Services application is deployed and running in `cos-liberty-tekton` project
+现在管道已完成，验证客户订单服务应用程序已部署并在cos-liberty-tekton项目中运行  
 
-- In the OpenShift Console, navigate to **Topology** view and click on the `cos-liberty` DeploymentConfig to view deployment details, including `Pods` `Services` and `Routes`
-
+在 OpenShift 控制台中，导航到Topology视图并单击cos-libertyDeploymentConfig 以查看部署详细信息，包括Pods Services和Routes  
 #### 拓扑
   ![Deployment](images/tekton-only/validate-1.jpg)
 
