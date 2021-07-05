@@ -1,13 +1,8 @@
 ---
-title: Modernizing runtimes with Liberty - Deploy using OpenShift Pipelines on OCP 4.x
-description: This section covers how to deploy the application to Red Hat OpenShift 4.3 using a Tekton (OpenShift Pipelines) CI/CD pipeline. The diagram below shows the flow of the pipeline which starts when the developer checks their code in to Git and ends with the application being deployed in a build namespace.
+标题: 使用 Liberty 现代化运行时 - 在 OCP 4.x 上使用 OpenShift Pipelines 进行部署
+描述: 本节介绍如何使用 Tekton (OpenShift Pipelines) CI/CD 管道将应用程序部署到 Red Hat OpenShift 4.3。下图显示了管道的流程，该流程从开发人员将其代码签入 Git 开始，并以应用程序部署在构建命名空间中结束。
 ---
 
-export const Title = () => (
-  <span>
-Modernizing runtimes with Liberty <br/> <h2>Deploy using OpenShift Pipelines on OCP 4.x</h2>
-  </span>
-);
 
 <PageDescription>
 
@@ -25,10 +20,10 @@ Modernizing runtimes with Liberty <br/> <h2>Deploy using OpenShift Pipelines on 
 </AnchorLinks>
 
 ## Overview
-This section covers how to deploy the application to Red Hat OpenShift 4.3+ using a OpenShift Pipelines CI/CD pipeline. The diagram below shows the flow of the pipeline which starts when the developer checks their code in to Git and ends with the application being deployed in a build namespace.
+本节介绍如何使用 OpenShift Pipelines CI/CD 管道将应用程序部署到 Red Hat OpenShift 4.3+。下图显示了管道的流程，该流程从开发人员将其代码签入 Git 开始，并以应用程序部署在构建命名空间中结束。
 </PageDescription>
 
-This is a very simple pipeline to demonstrate the basic steps required to build and deploy a Liberty application to OpenShift. A more complete pipeline is described in the [Liberty - Deploy using Cloud Native Toolkit](liberty-deploy-cloud-native-toolkit) section
+这是一个非常简单的管道，用于演示构建 Liberty 应用程序并将其部署到 OpenShift 所需的基本步骤
 
 The diagram below shows the following flow:
 
@@ -38,15 +33,16 @@ The diagram below shows the following flow:
 
 - 3) A `tekton task` clones the application source code (4) from the application repository, uses `Maven` to compile and test the application before using `buildah` to create a `Docker image` which is pushed to the docker registry (5)
 
-- 6) A `tekton task` deploys the `application` to the local namespace using the image from the `docker registry` (7)
+- 6) A `tekton task` deploys the `application` to the local namespace using the image from the `docker registry` 
+- (7)
 
   ![Pipeline](images/tekton-flow.jpg)
 
-## Deploy the Application
-The following steps will deploy the modernized Customer Order Services application in a WebSphere Liberty container to a Red Hat OpenShift cluster.
+## 部署应用程序
+  以下步骤将在 WebSphere Liberty 容器中将现代化的 Customer Order Services 应用程序部署到 Red Hat OpenShift 集群。
 
-### Prerequisites
-You will need the following:
+### 先决条件
+您将需要以下内容:
 
 - [Git CLI](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
 - Red Hat OpenShift Container Platfrom 4.3+ with Cluster Admin permissions
@@ -55,15 +51,15 @@ You will need the following:
 - [Red Hat OpenShift Pipelines Operator]
 - [Tekton CLI](https://github.com/tektoncd/cli)
 
-### Getting the project repository
-You can clone the repository from its main GitHub repository page and checkout the appropriate branch for this version of the application.
+### 获取项目存储库
+您可以从其主 GitHub 存储库页面克隆存储库，并为该版本的应用程序签出相应的分支。
 
 ```
 git clone https://github.com/ibm-cloud-architecture/appmod-liberty-tekton.git
 cd appmod-liberty-tekton
 ```
 
-### Create application database
+### 创建应用程序数据库
 As said in the prerequisites section above, the Customer Order Services application uses uses DB2 as its database.
 
 If you want to use a pre-configured DB2 database in a container in OpenShift, use the instructions provided [here](db2)
@@ -88,7 +84,7 @@ Alternatively, if you have a DB2 server that you want to use, follow these steps
 
 If you want to re-run the scripts, please make sure you drop the databases and create them again.
 
-### Create the build project
+### 创建构建项目
 Create the project that will be used for the Tekton pipeline and the initial deployment of the application.
 
 Issue the command shown below to create the project:
@@ -96,7 +92,7 @@ Issue the command shown below to create the project:
 oc new-project cos-liberty-tekton
 ```
 
-### Import the Tekton resources
+### 导入 Tekton 资源
 Import the Tekton `Tasks`, `Pipeline` and `PipelineResources` in to the project using the commands shown below:
 
 ```
@@ -107,7 +103,7 @@ oc apply -f gse-build-deploy-pvc-pipeline.yaml
 oc apply -f gse-build-pipeline-resources.yaml
 ```
 
-### Run the pipeline
+### 运行 pipeline
 The recommended way to trigger the pipeline would be via a webhook and [Tekton Trigger](https://github.com/tektoncd/triggers) but for simplicity the command line can be used. Issue the command below to trigger the pipeline:
 
 ```
@@ -122,12 +118,12 @@ When prompted, accept the default `docker-image` value as shown below:
 
   ![Pipeline1](images/tekton-only/start-2.jpg)
 
-### View the pipeline logs
+### 查看 pipeline logs
 - In the OpenShift Container Platform UI, change to the **Developer** view, select the `cos-liberty-tekton` project and then select **Pipelines**. Click on the **Last Run**
 
   ![Pipeline](images/tekton-only/run-1.jpg)
 
-- Select **Logs**
+- 选择日志
 
   ![Pipeline Logs](images/tekton-only/run-2.jpg)
 
@@ -137,23 +133,22 @@ When prompted, accept the default `docker-image` value as shown below:
 
 - Once both the `gse-build` and `gse-apply-manifests` steps are complete, the pipeline is finished.
 
-### Validate the application
+### 验证应用
 Now that the pipeline is complete, validate the Customer Order Services application is deployed and running in `cos-liberty-tekton` project
 
 - In the OpenShift Console, navigate to **Topology** view and click on the `cos-liberty` DeploymentConfig to view deployment details, including `Pods` `Services` and `Routes`
 
-#### Topology
+#### 拓扑
   ![Deployment](images/tekton-only/validate-1.jpg)
 
-- From this view you can also view the **route** for the application. Note that the URL is < application_name >-< project_name >.< ocp cluster url >. In this case the project name is `cos-liberty-tekton`
+- 从此视图中，您还可以查看应用程序的路由。注意 URL 是 <application_name>-<project_name>.<ocp cluster url>。在这种情况下，项目名称是cos-liberty-tekton
 
   ![Route](images/tekton-only/route.jpg)
 
-- Add `/CustomerOrderServicesWeb` to the end of the URL in the browser to access the application
+-  添加/CustomerOrderServicesWeb到浏览器中的 URL 末尾以访问应用程序
 
   ![Dev Running](images/liberty-deploy/dev-running.jpg)
 
-- Log in to the application with `username: rbarcia` and `password: bl0wfish`
+- 使用username: rbarcia和登录应用程序password: bl0wfish
 
-## Review and Next Steps
-In this section you configured a CI/CD pipeline for the CustomerOrderServices application that builds a single immutable image for the latest version of the application and then deploys it to a dev environment.
+
