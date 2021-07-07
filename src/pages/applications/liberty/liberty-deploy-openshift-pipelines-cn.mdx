@@ -15,14 +15,14 @@
 
 下图显示了以下流程:
 
-- 1) A developer commits code to the `application repository`    
+- 1) 开发提交代码到 `application repository`    
 
-- 2) A webhook starts a `tekton pipeline` running in the `build` project  
+- 2) 通过 webhook启动`tekton pipeline` running in the `build` project  
 
-- 3) A `tekton task` clones the application source code  
-- 4) from the application repository, uses `Maven` to compile and test the application before using `buildah` to create a `Docker image` which is pushed to the docker registry (5)
-
-- 6) A `tekton task` deploys the `application` to the local namespace using the image from the `docker registry`  (7)
+- 3) 通过 `tekton task` 克隆应用代码  
+- 4) 使用 `Maven` 编译测试代码，使用 `buildah` 创建`Docker image`   
+- 5）并提交到镜像仓库  
+- 6) 通过`tekton task`从镜像仓库拉取镜像创建应用
 
   ![Pipeline](images/tekton-flow.jpg)
 
