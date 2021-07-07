@@ -49,27 +49,22 @@ cd appmod-liberty-tekton
 ### 创建应用程序数据库
 正如上面的先决条件部分所述，Customer Order Services 应用程序使用 DB2 作为其数据库。 
 
-如果要在 OpenShift 的容器中使用预先配置的 DB2 数据库，请使用此处提供的说明  
+导航到 DB2 文件夹  
+在yaml对文件Deployment和Service是在db2存储库的文件夹  
+cd appmod-liberty-toolkit  
 
-或者，如果您有要使用的 DB2 服务器，请按照以下步骤创建应用程序所需的适当数据库、表和数据：  
+cd db2  
+将 DB2 映像部署到 OpenShift  
+发出以下命令来创建namespace，service account，deploymentconfig和service：  
+oc create ns db2   
+oc project db2  
+oc create serviceaccount mysvcacct -n db2  
+oc adm policy add-scc-to-user privileged system:serviceaccount:db2:mysvcacct  
+oc apply -f db2-dc.yaml  
+oc apply -f db2-service.yaml  
+DB2 数据库需要几分钟才能启动，然后可以在集群中访问 db2.db2.svc:50000  
 
-将您可以在此存储库的 Common 目录中找到的 createOrderDB.sql 和 initialDataSet.sql 文件复制到 db2 主机（或 git clone 存储库），以便稍后执行它们。  
-
-ssh 进入 db2 主机  
-
-更改为 db2 实例用户：`su {database_instance_name}`  
-
-启动 db2： db2start  
-
-创建 ORDERDB 数据库： db2 create database ORDERDB  
-
-连接到 ORDERDB 数据库： db2 connect to ORDERDB  
-
-执行您在步骤 1 中复制的 createOrderDB.sql 脚本，以创建适当的表、关系、主键等： db2 -tf createOrderDB.sql  
-
-执行您在步骤 1 中复制的 initialDataSet.sql 脚本，以使用所需的初始数据集填充 ORDERDB 数据库： db2 -tf initialDataSet.sql  
-
-如果要重新运行脚本，请确保删除数据库并重新创建它们。  
+如果要在集群外公开数据库，请使用db2-nodeport.yaml文件  
 
 ### 创建构建项目
 创建将用于 Tekton 管道和应用程序初始部署的项目。  
