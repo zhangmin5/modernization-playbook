@@ -1,6 +1,6 @@
 ---
 标题: 使用 Liberty 现代化运行时 - 在 OCP 4.x 上使用 OpenShift Pipelines 进行部署
-描述: 本节介绍如何使用 Tekton (OpenShift Pipelines) CI/CD 管道将应用程序部署到 Red Hat OpenShift 4.3。下图显示了管道的流程，该流程从开发人员将其代码签入 Git 开始，并以应用程序部署在构建命名空间中结束。
+描述: 本节介绍如何使用 Tekton (OpenShift Pipelines) CI/CD 将应用程序部署到 Red Hat OpenShift 4.3。下图显示了管道的流程，该流程从开发人员将其代码签入 Git 开始，并以应用程序部署在构建命名空间中结束。
 ---
 
 
@@ -8,10 +8,10 @@
 
 
 ## 概述
-本节介绍如何使用 OpenShift Pipelines CI/CD 管道将应用程序部署到 Red Hat OpenShift 4.3+。下图显示了管道的流程，该流程从开发人员将其代码签入 Git 开始，并以应用程序部署在构建命名空间中结束。
+本节介绍如何使用 OpenShift Pipelines CI/CD 将应用程序部署到 Red Hat OpenShift 4.3+。下图显示了管道的流程，该流程从开发人员将其代码签入 Git 开始，并以应用程序部署在构建命名空间中结束。
 </PageDescription>
 
-这是一个非常简单的管道，用于演示构建 Liberty 应用程序并将其部署到 OpenShift 所需的基本步骤
+这是一个非常简单的 Pipeline，用于演示构建 Liberty 应用程序并将其部署到 OpenShift 所需的基本步骤
 
 下图显示了以下流程:
 
@@ -121,7 +121,7 @@ tkn pipeline start  gse-build-deploy-pvc-pipeline -n cos-liberty-tekton
 - 一旦gse-build和gse-apply-manifests步骤都完成，管道就完成了。
 
 ### 验证应用
-现在管道已完成，验证客户订单服务应用程序已部署并在cos-liberty-tekton项目中运行  
+现在 Pipeline已完成，验证客户订单服务应用程序已部署并在cos-liberty-tekton项目中运行  
 
 在 OpenShift 控制台中，导航到Topology视图并单击cos-libertyDeploymentConfig 以查看部署详细信息，包括Pods Services和Routes  
 #### 拓扑
