@@ -20,8 +20,7 @@
 - 2) 通过 webhook启动`tekton pipeline` running in the `build` project  
 
 - 3) 通过 `tekton task` 克隆应用代码  
-- 4) 使用 `Maven` 编译测试代码，使用 `buildah` 创建`Docker image`   
-- 5）并提交到镜像仓库  
+- 4) 使用 `Maven` 编译测试代码，使用 `buildah` 创建`Docker image` 并提交到镜像仓库  
 - 6) 通过`tekton task`从镜像仓库拉取镜像创建应用
 
   ![Pipeline](images/tekton-flow.jpg)
